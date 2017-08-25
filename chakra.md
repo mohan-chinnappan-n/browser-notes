@@ -18,7 +18,7 @@
 
 
 
-###Chakra Core
+### Chakra Core
 
 
 Chakra Core has certain components of **Chakra** and is modified to report certain data differently.
