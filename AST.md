@@ -13,6 +13,21 @@ Each node of the tree denotes a construct occurring in the source code.
 
 #### Parse Tree
 
+Grammer:
+
+```
+grammar Expr;       
+prog:   (expr NEWLINE)* ;
+expr:   expr ('*'|'/') expr
+    |   expr ('+'|'-') expr
+    |   INT
+    |   '(' expr ')'
+    ;
+NEWLINE : [\r\n]+ ;
+INT     : [0-9]+ ;
+
+```
+
 ![parse tree](./img/antlr-parse-tree.png)
 
 Here are the main differences between ASTs and Parse trees:
