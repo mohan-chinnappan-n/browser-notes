@@ -237,6 +237,90 @@ If it is a one-time executed “non-hot” code, it will only be compiled into b
 Garbage collection is also done in a **stop-the-world**, generational way. This means that before the JavaScript engine does garbage collection, all processing of JavaScript **will be paused** and the garbage collector will find objects and data that are **no longer referenced** and collect them. This ensures that garbage collection is done in an accurate and efficient way
 
 
+**Inspiration for the Chrome Design: Modern Operating Systems (Unix/Linux!)**:
+
+[Ref](https://www.chromium.org/developers/design-documents/multi-process-architecture)
+
+Modern operating systems are more robust because they put applications into separate processes that are walled off from one another.
+
+A crash in one application generally does not impair other applications or the integrity of the operating system, and each user's access to other users' data is restricted.
+
+In Chrome, we use **separate processes** for **browser tabs** to protect the overall application from bugs and glitches in the rendering engine. 
+
+We also restrict access from each rendering engine process to others and to the rest of the system. In some ways, this brings to web browsing the benefits that memory protection and access control brought to **operating systems**.
+
+We refer to the main process that runs the UI and manages tab and plugin processes as the **browser process** or **browser.** 
+
+Likewise, the tab-specific processes are called **render processes** or **renderers**
+
+![Chrome Arch](https://www.chromium.org/_/rsrc/1220197832277/developers/design-documents/multi-process-architecture/arch.png)
+
+
+The renderers use the Blink open-source layout engine for interpreting and laying out HTML.
+
+The browser and the renderers communicate using Chromium's IPC system.
+[Ref](https://www.chromium.org/developers/design-documents/inter-process-communication)
+
+Chromium has a multi-process architecture which means that we have a lot of processes communicating with each other. 
+
+Our main inter-process communication primitive is the **named pipe**. On Linux & OS X, we use a ```socketpair()``.
+
+A **named pipe** is allocated for each **renderer process** for communication with the **browser process**. 
+
+These pipes are used in asynchronous mode to ensure that neither end is blocked waiting for the other.
+
+### Browser side
+
+Within the browser, communication with the renderers is done in a separate I/O thread. Messages to and from the views then have to be proxied over to the main thread using a ChannelProxy (Channel as shown the above diagram).
+
+ The advantage of this scheme is that resource requests (for web pages, etc.), which are the most common and performance critical messages, can be handled entirely on the I/O thread and not block the user interface. 
+ 
+ These are done through the use of a 
+ 
+ 
+ ChannelProxy::MessageFilter
+ 
+  which is inserted into the channel by the RenderProcessHost. This filter runs in the I/O thread, intercepts resource request messages, and forwards them directly to the resource dispatcher host. 
+
+
+### Renderer side
+
+Each renderer also has a thread that manages communication (in this case, the main thread), with the rendering and most processing happening on another thread (renderer thread)
+
+
+We have two primary types of messages: **routed** and **control**.
+
+Control Messages:
+
+Control messages are handled by the class that created the pipe. Sometimes that class will allow others to received message by having a MessageRouter object that other listeners can register with and received "routed" messages sent with their unique (per pipe) id.
+
+
+```c++
+
+MyClass::OnMessageReceived(const IPC::Message& message) {
+  IPC_BEGIN_MESSAGE_MAP(MyClass, message)
+    // Will call OnMyMessage with the message. The parameters of the message will be unpacked for you.
+    IPC_MESSAGE_HANDLER(ViewHostMsg_MyMessage, OnMyMessage)  
+    ...
+    IPC_MESSAGE_UNHANDLED_ERROR()  // This will throw an exception for unhandled messages.
+  IPC_END_MESSAGE_MAP()
+}
+
+// This function will be called with the parameters extracted from the ViewHostMsg_MyMessage message.
+MyClass::OnMyMessage(const GURL& url, int something) {
+  ...
+}
+```
+
+
+
+About Blink:
+
+[Ref](https://www.chromium.org/blink)
+
+Blink is a rendering engine used in Chrome (from version 28 onwards). Blink is a fork of the WebCore component of WebKit.
+
+
 ### SpiderMonkey
 
 
