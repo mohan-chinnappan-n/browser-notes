@@ -15,6 +15,66 @@
 [![1bfDB3YPHFI](https://img.youtube.com/vi/1bfDB3YPHFI/0.jpg)](https://www.youtube.com/watch?v=1bfDB3YPHFI)
 
 
+
+### How to use the Memory tool to diagnose memory issues that can impact the speed and stability of webpages
+
+[Ref](https://docs.microsoft.com/en-us/microsoft-edge/f12-devtools-guide/memory)
+
+
+#### Use case:
+
+The webpage is performing well when it **first loads**, but gradually slows and sometimes crashes, the page's memory use might be the problem.
+
+How to Diagnosing this memory issue?
+
+After you've loaded your webpage in the browser, open the **F12** developer tools and open the Memory tool (CTRL + 6).
+
+ You can start profiling from this screen and take heap snapshots during the profiling session.
+ 
+If the problem is high memory usage from the start, but not memory growth, take one snapshot and examine it to find the bigger areas of memory use. 
+
+If the memory use grows over time, you can compare snapshots to look at the areas where memory is growing.
+
+
+![Session summary](https://docs.microsoft.com/en-us/microsoft-edge/f12-devtools-guide/media/edge_memory.png)
+
+
+Note:
+
+Total memory timeline shows the memory use by the **current browser tab's processes** as a graph over time.
+
+
+Each snapshot shows a thumbnail of the webpage as it appeared at the **time** the snapshot was taken and specifics about the memory usage of your code.
+
+Object Counts:
+
+The number of new objects created and old objects removed are shown below the object count.
+
+ If these numbers are high, you might have a **performance problem**. When the amount of memory you use isn't bad, but a lot of objects are being created and removed, you create work for the **garbage collector** process which frees up memory. 
+ 
+**Garbase collector and performance impacts:**
+ 
+ Garbage collecting uses (CPU) processing power, however, so it's best to find ways to reuse or recycle these objects and give the garbage collector a break.
+ 
+
+**Signs for Memory Leak**
+
+Another important factor to keep in mind is the difference between the number of objects being added and objects being removed.
+
+ This is displayed in your second snapshot and beyond in the upper right in a "+x/-y" format.  Example: **+96/-9**
+ 
+In the set of snapshots above, it shows that each time we ran the process we suspected of having a memory issue, we increased the number of objects by **96**, but only removed **9**. 
+
+This is a strong clue that there's a **memory leak** in the process.
+
+Memory leaks will keep expanding the memory use of your webpage during a user's session with it, causing slowness or even instability if the memory use grows too big.
+
+
+
+
+
+
+
 ## Octane 2.0 rating for the browsers
 
 
