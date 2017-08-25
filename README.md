@@ -277,8 +277,9 @@ Within the browser, communication with the renderers is done in a separate I/O t
  
  These are done through the use of a 
  
- 
+ ```c++
  ChannelProxy::MessageFilter
+ ```
  
   which is inserted into the channel by the RenderProcessHost. This filter runs in the I/O thread, intercepts resource request messages, and forwards them directly to the resource dispatcher host. 
 
