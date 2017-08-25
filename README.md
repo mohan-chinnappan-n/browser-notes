@@ -10,6 +10,8 @@
 
 ![components](./img/chakra-arch.png)
 
+[Ref](https://github.com/Microsoft/ChakraCore/wiki/Architecture-Overview)
+
 
 #### Video
 [![1bfDB3YPHFI](https://img.youtube.com/vi/1bfDB3YPHFI/0.jpg)](https://www.youtube.com/watch?v=1bfDB3YPHFI)
@@ -124,7 +126,62 @@ Here we are comparing Snapshot #3 with Snapshot #2:
 
 Google Chrome V8
 
-The V8 engine has an interpreter named “Ignition” [5]. This interpreter is used for interpreting and executing low level bytecode. Bytecodes, although slower, are smaller than machine codes and requires lesser compilation time.
+The V8 engine has an interpreter named **Ignition**. 
+
+This interpreter is used for **interpreting and executing low level bytecode**. Bytecodes, although slower, are smaller than machine codes and requires **lesser** compilation time.
 
 
 [v8-Ignition-Design-Doc.pdf](./doc/v8-Ignition-Design-Doc.pdf)
+
+
+In order to compile Javascript to bytecode, the Javascript code has to be parsed to generate its **Abstract Syntax Tree** (AST). 
+
+The interpreter has an accumulator register, which allows it reduce the size of the bytecode. The overall design makes Ignition a highly efficient interpreter.
+
+
+Optimizing JIT compiler - **TurboFan** is better than CranShaft JIT:
+
+TurboFan combines a cutting-edge intermediate representation with a multi-layered translation and optimization pipeline to **generate better quality machine code** than what was previously possible with the **CrankShaft JIT**. 
+
+Optimizations in TurboFan are more numerous, more sophisticated, and more thoroughly applied than in CrankShaft, enabling fluid code motion, control flow optimizations, and precise numerical range analysis, all of which were more previously unattainable.
+
+TurboFan is developed  with a layered architecture to allow the compiler to cope with new demands (due to new features) over time. 
+
+A clearer separation between the source-level language (JavaScript), the VM's capabilities (V8), and the architecture's intricacies (from x86 to ARM to MIPS - around 7 target architectures) allows for cleaner and more robust code.
+
+ Layering allows those working on the compiler to reason locally when implementing optimizations and features, as well as write more effective unit tests.
+
+
+Each of the 7 target architectures supported by TurboFan requires fewer than 3,000 lines of platform-specific code, versus 13,000-16,000 in CrankShaft. 
+
+This enabled engineers at ARM, Intel, MIPS, and IBM to contribute to TurboFan in a much more effective way.
+
+ TurboFan is able to more easily support all of the coming features of ES6 because its flexible design separates the JavaScript frontend from the architecture-dependent backends.
+ 
+ JavaScript enters the compiler pipeline in a mostly unoptimized form and is translated and optimized to progressively lower forms until machine code is generated. 
+ 
+ The centerpiece of the design is a more relaxed sea-of-nodes internal representation (IR) of the code which allows more effective reordering and optimization.
+ 
+ ![Example of Turbofan graph](https://lh6.googleusercontent.com/WuIFuWDNgOoc1Ag8RA6gQnL2gpr3pPRJbqnCurYSbjlvJMmBVmRWgi4iqVtz2t3Mvzly3d70SYWxsZr2mYNayO0c8EIa3GlyZmhFOcdI131nOvuanXdEoW5s_leuhEP-jDfaV4s)
+ 
+ 
+ The graph-based IR allows most optimizations to be expressed as simple **local** reductions which are easier to write and test independently. 
+ 
+ An optimization engine applies these local rules in a systematic and thorough way. 
+ 
+ Transitioning out of the graphical representation involves an innovative scheduling algorithm that makes use of the reordering freedom to move code out of loops and into less frequently executed paths. 
+ 
+ Finally, architecture-specific optimizations like complex instruction selection exploit features of each **target** platform for the best quality code.
+ 
+
+
+
+[Digging into TurboFan](https://v8project.blogspot.de/2015/07/digging-into-turbofan-jit.html)
+
+[Ref](https://developers.redhat.com/blog/2016/05/31/javascript-engine-performance-comparison-v8-charkra-chakra-core-2/)
+
+
+
+
+
+
