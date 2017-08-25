@@ -11,6 +11,10 @@ Each node of the tree denotes a construct occurring in the source code.
 
 ![AST Simple](https://ruslanspivak.com/lsbasi-part7/lsbasi_part7_ast_01.png)
 
+#### Parse Tree
+
+![parse tree](./img/antlr-parse-tree.png)
+
 Here are the main differences between ASTs and Parse trees:
 
 - ASTs uses operators/operations as root and interior nodes and it uses operands as their children.
