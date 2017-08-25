@@ -17,6 +17,40 @@
 [![1bfDB3YPHFI](https://img.youtube.com/vi/1bfDB3YPHFI/0.jpg)](https://www.youtube.com/watch?v=1bfDB3YPHFI)
 
 
+###Chakra Core
+
+
+Chakra Core has certain components of **Chakra** and is modified to report certain data differently.
+
+ Instead of **COM-based** diagnostic APIs, Chakra Core provides **JSON-based diagnostic APIs** which allow more applications with JSON parsers to support Chakra Core.
+ 
+ 
+ **JS to AST to bytecode**:
+
+Chakra Core first reads through the Javascript code syntax and parses it to generate its AST. 
+
+After the AST is generated, the code is passed to the **bytecode generator** and then the bytecode gets **profiled**. 
+
+This is different from Chrome V8 engine, which has a decision process that decides whether a piece of code should be profiled and optimized or should be turned into bytecode.
+
+
+During the profiling process, the interpreter attempts to send the code to parallel JIT compilers.
+
+ There are two types of JIT compilers available: 
+ 
+ 1. simple JIT compiler (quick compilation without much optimization)
+ 2. full JIT compiler (takes more time but produces better machine code, in case of code out of it's profile, bailout to simple JIT compiler happens)
+
+
+**Garbage Collection**
+
+As for garbage collection, it is done in a generational **mark-and-sweep** manner. 
+
+When garbage collection happens, a **foreground and background thread** will be spawned to carry out different executions.
+
+The background garbage collector will do a mark, rescan and mark to find objects that should be cleaned up.
+
+
 
 ### How to use the Memory tool to diagnose memory issues that can impact the speed and stability of webpages
 
@@ -124,7 +158,10 @@ Here we are comparing Snapshot #3 with Snapshot #2:
 ![Firefox 54.0.1](./img/octane2-firefox-54.0.1.png)
 
 
-Google Chrome V8
+### Comparsion chart
+![Comparsion chart](https://adtmag.com/blogs/dev-watch/2016/06/~/media/ECG/adtmag/Images/2016/06/digitaltrends_javascript.png)
+
+### Google Chrome V8
 
 The V8 engine has an interpreter named **Ignition**. 
 
@@ -132,6 +169,7 @@ This interpreter is used for **interpreting and executing low level bytecode**. 
 
 
 [v8-Ignition-Design-Doc.pdf](./doc/v8-Ignition-Design-Doc.pdf)
+
 [V8-Ignition-online-doc](https://docs.google.com/document/d/11T2CRex9hXxoJwbYqVQ32yIPMh0uouUZLdyrtmMoL44/edit?ts=56f27d9d#heading=h.6jz9dj3bnr8t)
 
 
@@ -180,6 +218,34 @@ This enabled engineers at ARM, Intel, MIPS, and IBM to contribute to TurboFan in
 [Digging into TurboFan](https://v8project.blogspot.de/2015/07/digging-into-turbofan-jit.html)
 
 [Ref](https://developers.redhat.com/blog/2016/05/31/javascript-engine-performance-comparison-v8-charkra-chakra-core-2/)
+
+
+**JS to AST to bytecode**:
+
+
+TurboFan will profile the code and see if it is used **multiple times** throughout the entire Javascript execution. If it is, the code will be **dynamically optimized** immediately into machine code, without any intermediate binary code. 
+
+If it is a one-time executed “non-hot” code, it will only be compiled into binary code.
+
+
+
+
+### Garbage Collection:
+
+
+Garbage collection is also done in a **stop-the-world**, generational way. This means that before the JavaScript engine does garbage collection, all processing of JavaScript **will be paused** and the garbage collector will find objects and data that are **no longer referenced** and collect them. This ensures that garbage collection is done in an accurate and efficient way
+
+
+### SpiderMonkey
+
+
+SpiderMonkey is Mozilla's JavaScript engine written in C and C++. It is used in various Mozilla products, including Firefox, and is available under the MPL2.
+
+[SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey]
+
+
+
+
 
 
 
