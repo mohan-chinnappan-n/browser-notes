@@ -296,6 +296,64 @@ Control Messages:
 Control messages are handled by the class that created the pipe. Sometimes that class will allow others to received message by having a MessageRouter object that other listeners can register with and received "routed" messages sent with their unique (per pipe) id.
 
 
+Routed Messages:
+
+Routed Messages have historically been used to get messages to a specific **RenderViewHost**. However, technically any class can receive routed messages by using 
+
+```c++
+RenderProcessHost::GetNextRoutingID
+```
+
+ and registering itself with ```RenderProcessHost::AddRoute```.
+ 
+  Currently, both RenderViewHost and RenderFrameHost instances have their own routing IDs.
+  
+  
+Messages related to a document's frame sent from the **browser to the renderer** are called **Frame messages** because they are being sent to the RenderFrame.
+
+
+Messages sent from the **renderer to the browser** are called **FrameHost messages** because they are being sent to the RenderFrameHost
+
+
+[Ref](https://github.com/ChromiumWebApps/chromium/blob/master/content/common/frame_messages.h)
+
+```c++
+
+//----------------------------------------------------------------------------
+// Messages sent from the renderer to the browser.
+
+// Sent by the renderer when a child frame is created in the renderer.
+//
+// Each of these messages will have a corresponding FrameHostMsg_Detach message
+// sent when the frame is detached from the DOM. 
+// -- FrameHost messages
+IPC_SYNC_MESSAGE_CONTROL2_1(FrameHostMsg_CreateChildFrame,
+                            int32 /* parent_routing_id */,
+                            std::string /* frame_name */,
+                            int32 /* new_routing_id */)
+                            
+//...
+
+
+// -----------------------------------------------------------------------------
+// Messages sent from the browser to the renderer.
+
+// When HW accelerated buffers are swapped in an out-of-process child frame
+// renderer, the message is forwarded to the embedding frame to notify it of
+// a new texture available for compositing. When the buffer has finished
+// presenting, a FrameHostMsg_BuffersSwappedACK should be sent back to
+// gpu host that produced this buffer.
+//
+// This is used in the non-ubercomp HW accelerated compositing path.
+// Frame messages
+IPC_MESSAGE_ROUTED1(FrameMsg_BuffersSwapped,
+                    FrameMsg_BuffersSwapped_Params /* params */)
+                                             
+                            
+```
+
+
+
 ```c++
 
 MyClass::OnMessageReceived(const IPC::Message& message) {
