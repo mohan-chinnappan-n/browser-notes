@@ -120,3 +120,11 @@ Here we are comparing Snapshot #3 with Snapshot #2:
 
 #### Firefox 54.0.1
 ![Firefox 54.0.1](./img/octane2-firefox-54.0.1.png)
+
+
+Google Chrome V8
+
+The V8 engine has an interpreter named “Ignition” [5]. This interpreter is used for interpreting and executing low level bytecode. Bytecodes, although slower, are smaller than machine codes and requires lesser compilation time.
+
+
+[v8-Ignition-Design-Doc.pdf](./doc/v8-Ignition-Design-Doc.pdf)
