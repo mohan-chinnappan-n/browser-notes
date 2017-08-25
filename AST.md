@@ -13,7 +13,7 @@ Each node of the tree denotes a construct occurring in the source code.
 
 #### Parse Tree
 
-Grammer:
+Grammar:
 
 ```
 grammar Expr;       
