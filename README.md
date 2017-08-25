@@ -6,6 +6,6 @@
 
 - [SpiderMonkey](spidermonkey.md)
 
-- [Abstract Syntax Tree (AST) ](ast.md)
+- [Abstract Syntax Tree (AST) ](AST.md)
 
 
