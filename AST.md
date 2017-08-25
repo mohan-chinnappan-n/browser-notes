@@ -30,7 +30,7 @@ INT     : [0-9]+ ;
 
 ![parse tree](./img/antlr-parse-tree.png)
 
-Here are the main differences between ASTs and Parse trees:
+Here are the main differences between ASTs and Parse Trees:
 
 - ASTs uses operators/operations as root and interior nodes and it uses operands as their children.
     
