@@ -70,8 +70,42 @@ This is a strong clue that there's a **memory leak** in the process.
 Memory leaks will keep expanding the memory use of your webpage during a user's session with it, causing slowness or even instability if the memory use grows too big.
 
 
+#### Snapshot detailed view
+
+![snapshot detailed view](https://docs.microsoft.com/en-us/microsoft-edge/f12-devtools-guide/media/edge_memory_details.png)
+
+Note:
+
+ If you see: **the DOM node is not attached to the DOM** : this can happen when the node has been removed from the DOM, but is referred to elsewhere.
+ 
+ 
+ Circular references: 
+ 
+ In its simplest form, a circular reference happens when one object refers to another object that refers back to it, creating a loop.
+ 
+
+**3 View types**
+
+The three view types
+
+Types:
+
+ view groups objects by their constructor function and gives a count of each type. This makes it easier to know how many arrays you have, how many strings, and so on. Those groups can be expanded to view individual objects.
+
+Roots:
+
+ view shows the major root objects that you can expand to see the child objects associated with them.
+
+Dominators:
+
+ view breaks out all individual HTML elements, DOM nodes, and JavaScript objects your code creates. This is the most detailed of the views.
 
 
+#### Snapshot comparision view
+
+Here we are comparing Snapshot #3 with Snapshot #2:
+
+![Snapshot comparision view](https://docs.microsoft.com/en-us/microsoft-edge/f12-devtools-guide/media/edge_memory_compare.png)
 
 
 
