@@ -1,4 +1,4 @@
-## Notes on IE JavaScript Engine: Chakra
+## Notes on IE JavaScript Engine: Chakra and ChakraCore
 
 
 #### Components
