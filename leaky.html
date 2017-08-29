@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Leaky page</title>
+</head>
+<body>
+
+<button id='create'>Create</button>
+
+<script>
+
+// following code shows the   detached DOM nodes.
+
+// here code creates ul and li nodes but not attaching it to DOM
+
+//  A node is said to be "detached" when it's removed from the DOM tree but some JavaScript still references it
+
+var detachedNodes;
+
+function create() {
+  var ul = document.createElement('ul');
+  for (var i = 0; i < 10; i++) {
+    var li = document.createElement('li');
+    ul.appendChild(li);
+  }
+  detachedNodes = ul;
+}
+document.getElementById('create').addEventListener('click', create);
+
+</script>
+</body>
+</html>

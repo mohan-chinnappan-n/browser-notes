@@ -298,3 +298,9 @@ About Blink:
 [Ref](https://www.chromium.org/blink)
 
 Blink is a rendering engine used in Chrome (from version 28 onwards). Blink is a fork of the WebCore component of WebKit.
+
+
+#### How to fix memory problems in Chrome?
+[Ref](https://developers.google.com/web/tools/chrome-devtools/memory-problems/)
+
+![Finding Detached DOM Nodes](img/detachedDOMNodes.gif)
