@@ -306,4 +306,12 @@ Blink is a rendering engine used in Chrome (from version 28 onwards). Blink is a
 #### How to fix memory problems in Chrome?
 [Ref](https://developers.google.com/web/tools/chrome-devtools/memory-problems/)
 
+### Finding Detached DOM nodes:
+
 ![Finding Detached DOM Nodes](img/detachedDOMNodes.gif)
+
+Identify JS heap memory leaks with Allocation Timelines:
+![Finding JS heap memory leaks in Allocation Timelines](img/createArrayObjects.gif)
+
+
+
