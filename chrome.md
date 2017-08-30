@@ -72,6 +72,9 @@ If it is a one-time executed “non-hot” code, it will only be compiled into b
 
 Garbage collection is also done in a **stop-the-world**, generational way. This means that before the JavaScript engine does garbage collection, all processing of JavaScript **will be paused** and the garbage collector will find objects and data that are **no longer referenced** and collect them. This ensures that garbage collection is done in an accurate and efficient way
 
+Latest version of chrome uses incremental garbage collector [Ref](https://blog.chromium.org/2011/11/game-changer-for-interactive.html)
+This dramatically improves interactive performance of web apps and HTML5 games. Avoiding pauses is vital to achieving good interactive performance. Previously, garbage collection pause times depended on the amount of memory used. Therefore, large interactive apps were impacted by pauses that caused hiccuping. V8’s new GC reduces pause times dramatically while maintaining great peak performance and memory use.
+
 
 **Inspiration for the Chrome Design: Modern Operating Systems (Unix/Linux!)**:
 
