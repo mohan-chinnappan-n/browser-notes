@@ -56,7 +56,7 @@ How to Help GC:
  We can help the garbage collector in JScript by marking the symbols with a **null** value that you want to be garbage collected.
 
 
-Example to write leaky free code:
+Example to write leak free code:
 
 ```
 
