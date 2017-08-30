@@ -1,9 +1,13 @@
 ### Garbage collection in IE
 
 [Ref](https://blogs.msdn.microsoft.com/ericlippert/2003/09/17/how-do-the-script-garbage-collectors-work/)
+
 [Ref](http://milan.adamovsky.com/2012/02/javascript-memory-leaks-in-internet.html)
+
 [Ref](https://msdn.microsoft.com/library/bb250448(v=vs.85).aspx)
+
 [Ref](https://msdn.microsoft.com/en-us/library/bb250448.aspx)
+
 [Ref](https://medium.com/@garthw/how-to-work-around-ie-memory-leaks-in-spas-b2f6bc7c9ae9)
 
 
@@ -116,6 +120,8 @@ maintain a registry of all event handlers (say: eventRegistry) that you've attac
 
 
 ```
+//Pay particular attention to event subscription and DOM references, 
+// and ensuring that each component has a working teardown operation that releases all DOM references. 
 
 window.unload = function () {
   // clean up event by setting event registry items to null 
@@ -132,12 +138,7 @@ window.unload = function () {
 
 ```
 
-
-Steps:
-
-Pay particular attention to event subscription and DOM references, and ensuring that each component has a working teardown operation that releases all DOM references. 
-
-Observations Single Page Applications (SPA):
+### Observations Single Page Applications (SPA):
 
 An IE process functions normally until about 1.6GB RAM.
 
