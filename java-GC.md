@@ -1,13 +1,5 @@
-### Garbage collection in IE
+### Garbage collection Java Virtual Machine 
 
-Background:
-
-JScript and VBScript both are automatic storage languages. Unlike, say, C++, the script developer does not have to worry about explicitly allocating and freeing each chunk of memory used by the program. The internal device in the engine which takes care of this task for the developer is called the garbage collector. This is very similar to Java Garbage Collection (GC):
-
-
-Details about Automatic Garbage Collection:
-
-Let us take Java GC to explain the concepts:
 
 [Ref](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html)
 
