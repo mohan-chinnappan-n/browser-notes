@@ -313,8 +313,6 @@ Blink is a rendering engine used in Chrome (from version 28 onwards). Blink is a
 Identify JS heap memory leaks with Allocation Timelines:
 ![Finding JS heap memory leaks in Allocation Timelines](img/createArrayObjects.gif)
 
-Profile by functions:
-![Profile by functions](img/byFunctions.gif)
 
 
 
