@@ -45,6 +45,9 @@ Manually forcing GC:
 
 You can force the JScript garbage collector to run with the ```CollectGarbage()``` method,
 
+How check the avaiabilty of undocumented CollectGarbage():
+
+![check Collect Garbage](img/check-for-CollectGarbage.png)
 
 Leaks:
 
@@ -148,7 +151,10 @@ The process can only be transparently recycled when the user navigates from one 
 
 If the web app causes IE to consume RAM in a single operation so that it starts at < 1.6GB and completes at > 1.8GB the process will terminate without warning.
 
+#### Useful links
 
+[IE Memory leak in emberjs](https://github.com/emberjs/ember.js/issues/13940)
+[MS Virtual machines](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
 
 
 
