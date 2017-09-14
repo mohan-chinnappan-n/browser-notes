@@ -191,7 +191,7 @@ This JavaScript Memory Leak Detector is a debugging tool to detect memory leaks 
 IEJSLeaksDetector is a plain, native, Windows application and does not require any particular setup (the executable can be just unzipped and run).
 It only runs in 32 bit versions of Windows. 64 bits editions are not supported yet.
 
-![IEJSLeaksDetector](https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Components.PostAttachments/00/09/85/61/80/image005.png)
+![IEJSLeaksDetector](img/ieleaksdetector.png)
 
 [More Details](https://blogs.msdn.microsoft.com/gpde/2009/08/03/javascript-memory-leak-detector-v2/)
 
