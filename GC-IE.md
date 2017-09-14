@@ -190,7 +190,91 @@ Memory leaks are listed specifying the DOM object's type and a list of "attached
 
 [More Details](https://blogs.msdn.microsoft.com/gpde/2009/08/03/javascript-memory-leak-detector-v2/)
 
+#### Tips
 
+1. How to prevent accidental globals in your code:
+
+```
+'use strict';
+
+```
+
+at the beginning of your JavaScript files. This enables a stricter mode of parsing JavaScript that prevents accidental globals.
+
+Note:
+
+The Global variables are by definition noncollectable (unless nulled or reassigned).
+
+ In particular, global variables used to temporarily store and process big amounts of information are of concern.
+
+If you must use a global variable to store lots of data, make sure to null it or reassign it after you are done with it. 
+
+One common cause for increased memory consumption in connection with globals are caches.
+
+Caches store data that is repeatedly used. For this to be efficient, caches must have an upper bound for its size. 
+
+Caches that grow unbounded can result in high memory consumption because their contents cannot be collected.
+
+
+------
+
+2. Forgotten callbacks
+
+```javascript
+
+var element = document.getElementById('button');
+
+function onClick(event) {
+    element.innerHtml = 'text';
+}
+
+element.addEventListener('click', onClick);
+// Do stuff
+element.removeEventListener('click', onClick);
+element.parentNode.removeChild(element);
+// Now when element goes out of scope,
+// both element and onClick will be collected even in old browsers that don't
+// handle cycles well.
+
+
+```
+
+-----
+
+3. Out of DOM references
+
+```javascript
+
+// Here two references to the same DOM element are kept: 
+//   one in the DOM tree and the other in the dictionary
+
+// dictionary
+var elements = {
+    button: document.getElementById('button'),
+    image: document.getElementById('image'),
+    text: document.getElementById('text')
+};
+
+function doStuff() {
+    image.src = 'http://some.url/image';
+    button.click();
+    console.log(text.innerHTML);
+    // Much more logic
+}
+
+function removeButton() {
+    // The button is a direct child of body.
+    document.body.removeChild(document.getElementById('button'));
+    // DOM tree item gone but:
+
+    // At this point, we still have a reference to #button in the global
+    // elements dictionary. In other words, the button element is still in
+    // memory and cannot be collected by the GC.
+}
+
+```
+
+4. closure memory leak - anonymous functions that capture variables from parent scopes
 
 
 
@@ -217,8 +301,21 @@ Memory leaks are listed specifying the DOM object's type and a list of "attached
 [Memory Management in Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)
 
 [4 Types of Memory Leaks in JavaScript and How to Get Rid Of Them](https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/)
- 
 
+[An interesting kind of JavaScript memory leak](https://blog.meteor.com/an-interesting-kind-of-javascript-memory-leak-8b47d2e7f156) 
+
+
+#### Chrome V8 engine specific 
+
+[Watch the memory grow](https://developer.chrome.com/devtools/docs/demos/memory/example1)
+
+[Watching the GC work](https://developer.chrome.com/devtools/docs/demos/memory/example2)
+
+[Scattered objects](https://developer.chrome.com/devtools/docs/demos/memory/example3)
+
+[Detached nodes](https://developer.chrome.com/devtools/docs/demos/memory/example4)
+
+[Memory and V8 hidden classes](https://developer.chrome.com/devtools/docs/demos/memory/example5)
 
 
 
