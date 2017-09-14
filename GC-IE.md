@@ -193,6 +193,14 @@ It only runs in 32 bit versions of Windows. 64 bits editions are not supported y
 
 ![IEJSLeaksDetector](img/ieleaksdetector.png)
 
+
+How to use the tool
+
+The user can start the memory profiling of a web application navigating to the desired URL. A new tab is opened with a WebBrowser control and a tree view shows all the documents and scripts that compose the current page.
+When the user has finished to interact with the page he can click the "Stop" button, which causes the tool to close the control and track possible leaks. 
+Memory leaks are listed specifying the DOM object's type and a list of "attached" JavaScript objects whose circular reference could be the cause of the leak. The tool also shows the call stack correponding to a memory leak, which represents the state of the script at the moment when the JavaScript object was attached to the DOM object. Finally, a script window highlights the exact point in the JavaScript code where the memory leak originated.
+
+
 [More Details](https://blogs.msdn.microsoft.com/gpde/2009/08/03/javascript-memory-leak-detector-v2/)
 
 
