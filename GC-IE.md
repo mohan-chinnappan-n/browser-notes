@@ -190,6 +190,10 @@ Memory leaks are listed specifying the DOM object's type and a list of "attached
 
 [More Details](https://blogs.msdn.microsoft.com/gpde/2009/08/03/javascript-memory-leak-detector-v2/)
 
+-----
+
+
+
 #### Tips
 
 1. How to prevent accidental globals in your code:
