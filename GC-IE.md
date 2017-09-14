@@ -4,6 +4,10 @@
 Memory that is not required by an application anymore that for some reason is not returned to the operating system or the pool of free memory
 
 
+Quote from Douglas Crockford:
+
+***Microsoft's Internet Explorer contains a number of leaks, the worst of which is an interaction with JScript. When a DOM object contains a reference to a JavaScript object (such an event handling function), and when that JavaScript object contains a reference to that DOM object, then a cyclic structure is formed. This is not in itself a problem. At such time as there are no other references to the DOM object and the event handler, then the garbage collector (an automatic memory resource manager) will reclaim them both, allowing their space to be reallocated. The JavaScript garbage collector understands about cycles and is not confused by them. Unfortunately, IE's DOM is not managed by JScript. It has its own memory manager that does not understand about cycles and so gets very confused. As a result, when cycles occur, memory reclamation does not occur. The memory that is not reclaimed is said to have leaked. Over time, this can result in memory starvation. In a memory space full of used cells, the browser starves to death.
+***
 
 Background:
 
@@ -309,6 +313,8 @@ Refer: [Here](https://blog.meteor.com/an-interesting-kind-of-javascript-memory-l
 [4 Types of Memory Leaks in JavaScript and How to Get Rid Of Them](https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/)
 
 [An interesting kind of JavaScript memory leak](https://blog.meteor.com/an-interesting-kind-of-javascript-memory-leak-8b47d2e7f156) 
+
+[JScript Memory Leaks](http://javascript.crockford.com/memory/leak.html)
 
 
 #### Chrome V8 engine specific 
