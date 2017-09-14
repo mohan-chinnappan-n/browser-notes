@@ -12,6 +12,11 @@
 
 
 
+#### What is memory leak?
+
+Memory that is not required by an application anymore that for some reason is not returned to the operating system or the pool of free memory
+
+
 
 Background:
 
@@ -43,8 +48,10 @@ At this point we know that all the memory still marked is allocated memory which
 
 Manually forcing GC:
 
+
 You can force the JScript garbage collector to run with the ```CollectGarbage()``` method,
 
+Doc for this JScript method: [CollectGarbage](https://msdn.microsoft.com/en-us/library/microsoft.jscript.globalobject.collectgarbage(VS.80).aspx)
 How check the avaiabilty of undocumented CollectGarbage():
 
 ![check Collect Garbage](img/check-for-CollectGarbage.png)
@@ -135,7 +142,11 @@ window.unload = function () {
    // force GC -  IE-specific function
    // it does not guarantee that it will be done on demand.
    //  we are merely asking for it to be done sooner than later.
-   CollectGarbage();
+   // check this method is not undefined
+   if (window.CollectGarbage() !== undefined){
+       window.CollectGarbage();
+   }
+
  }
 
 
@@ -151,13 +162,56 @@ The process can only be transparently recycled when the user navigates from one 
 
 If the web app causes IE to consume RAM in a single operation so that it starts at < 1.6GB and completes at > 1.8GB the process will terminate without warning.
 
+#### About IE 6 and 7 
+
+Internet Explorer 6 and 7 are known to have reference-counting garbage collectors for DOM objects. Cycles are a common mistake that can generate memory leaks
+The following circular reference code will result in memory leak:
+
+```javascript
+
+var div;
+window.onload = function() {
+  div = document.getElementById('myDivElement');
+  // main issue is in the next line...
+  div.circularReference = div;
+  div.lotsOfData = new Array(10000).join('*');
+};
+
+```
+
+DOM element "myDivElement" has a circular reference to itself in the "circularReference" property. If the property is not explicitly removed or nulled, a reference-counting garbage collector will always have at least one reference intact and will keep the DOM element in memory even if it was removed from the DOM tree. If the DOM element holds lots of data (illustrated in the above example with the "lotsOfData" property), the memory consumed by this data will never be released.
+
+
+#### Tools
+
+[IE JS Leaks Detector](img/IEJSLeaksDetector2.0.1.1.zip)
+
+This JavaScript Memory Leak Detector is a debugging tool to detect memory leaks and enforce best practices in JavaScript code when working with version of Internet Explorer older than IE8.
+
+IEJSLeaksDetector is a plain, native, Windows application and does not require any particular setup (the executable can be just unzipped and run).
+It only runs in 32 bit versions of Windows. 64 bits editions are not supported yet.
+
+![IEJSLeaksDetector](https://msdnshared.blob.core.windows.net/media/MSDNBlogsFS/prod.evol.blogs.msdn.com/CommunityServer.Components.PostAttachments/00/09/85/61/80/image005.png)
+
+[More Details](https://blogs.msdn.microsoft.com/gpde/2009/08/03/javascript-memory-leak-detector-v2/)
+
+
+
+
+
+
 #### Useful links
 
 [IE Memory leak in emberjs](https://github.com/emberjs/ember.js/issues/13940)
+
 [MS Virtual machines](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/)
 
+[GC for game developers](https://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript)
 
+[Memory Management in Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)
 
+[4 Types of Memory Leaks in JavaScript and How to Get Rid Of Them](https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/)
+ 
 
 
 
