@@ -1,16 +1,3 @@
-### Garbage collection in IE
-
-[Ref](https://blogs.msdn.microsoft.com/ericlippert/2003/09/17/how-do-the-script-garbage-collectors-work/)
-
-[Ref](http://milan.adamovsky.com/2012/02/javascript-memory-leaks-in-internet.html)
-
-[Ref](https://msdn.microsoft.com/library/bb250448(v=vs.85).aspx)
-
-[Ref](https://msdn.microsoft.com/en-us/library/bb250448.aspx)
-
-[Ref](https://medium.com/@garthw/how-to-work-around-ie-memory-leaks-in-spas-b2f6bc7c9ae9)
-
-
 
 #### What is memory leak?
 
@@ -209,6 +196,17 @@ Memory leaks are listed specifying the DOM object's type and a list of "attached
 
 
 #### Useful links
+
+
+[How Do The Script Garbage Collectors Work?](https://blogs.msdn.microsoft.com/ericlippert/2003/09/17/how-do-the-script-garbage-collectors-work/)
+
+[JavaScript Memory Leaks in Internet Explorer](http://milan.adamovsky.com/2012/02/javascript-memory-leaks-in-internet.html) 
+
+[Understanding and Solving Internet Explorer Leak Patterns](https://msdn.microsoft.com/en-us/library/bb250448.aspx)
+
+[How to Work Around IE Memory Leaks in SPAs](https://medium.com/@garthw/how-to-work-around-ie-memory-leaks-in-spas-b2f6bc7c9ae9)
+
+
 
 [IE Memory leak in emberjs](https://github.com/emberjs/ember.js/issues/13940)
 
